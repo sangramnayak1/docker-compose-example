@@ -1,3 +1,6 @@
+For more details [Follow the tutorial link](https://docs.docker.com/compose/gettingstarted/)
+
+<h2> Docker Compose Wiki</h2>
 <body class="colums">
   <p>
     This tutorial is designed to introduce the key concepts of Docker Compose whilst building a simple Python web application. The application uses the Flask framework and maintains a hit counter in
@@ -5,6 +8,21 @@
   </p>
 
   <p>The concepts demonstrated here should be understandable even if you’re not familiar with Python.</p>
+
+  <h2 id="where-to-go-next">Contents:</h2>
+
+  <ul id="my_toc" class="inline_toc">
+    <li><a href="#prerequisites" class="nomunge">Prerequisites</a></li>
+    <li><a href="#step-1-define-the-application-dependencies" class="nomunge">Step 1: Define the application dependencies</a></li>
+    <li><a href="#step-2-create-a-dockerfile" class="nomunge">Step 2: Create a Dockerfile</a></li>
+    <li><a href="#step-3-define-services-in-a-compose-file" class="nomunge">Step 3: Define services in a Compose file</a></li>
+    <li><a href="#step-4-build-and-run-your-app-with-compose" class="nomunge">Step 4: Build and run your app with Compose</a></li>
+    <li><a href="#step-5-edit-the-compose-file-to-add-a-bind-mount" class="nomunge">Step 5: Edit the Compose file to add a bind mount</a></li>
+    <li><a href="#step-6-re-build-and-run-the-app-with-compose" class="nomunge">Step 6: Re-build and run the app with Compose</a></li>
+    <li><a href="#step-7-update-the-application" class="nomunge">Step 7: Update the application</a></li>
+    <li><a href="#step-8-experiment-with-some-other-commands" class="nomunge">Step 8: Experiment with some other commands</a></li>
+    <li><a href="#where-to-go-next" class="nomunge">Where to go next</a></li>
+  </ul>
 
   <h2 id="prerequisites">Prerequisites</h2>
 
@@ -17,23 +35,30 @@
   <p>You don’t need to install Python or Redis, as both are provided by Docker images.</p>
 
   <h2 id="step-1-define-the-application-dependencies">Step 1: Define the application dependencies</h2>
-
-  <ol>
+  <ul>
     <li>
       <p>Create a directory for the project:</p>
-
       <div class="language-console highlighter-rouge">
-        <div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir </span>composetest
-<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>composetest
-</code></pre>
+        <div class="highlight">
+          <pre class="highlight">
+				<code>
+					<span class="gp">$</span><span class="w"> </span><span class="nb">mkdir </span>composetest
+					<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>composetest
+				</code>
+			</pre>
         </div>
       </div>
     </li>
+  </ul>
+
+  <ul>
     <li>
       <p>Create a file called <code class="language-plaintext highlighter-rouge">app.py</code> in your project directory and paste the following code in:</p>
-
-      <div class="language-python highlighter-rouge">
-        <div class="highlight"><pre class="highlight"><code><span class="kn">import</span> <span class="nn">time</span>
+      <div class="language-text highlighter-rouge">
+        <div class="highlight">
+          <pre class="highlight">
+	    <code>
+<span class="kn">import</span> <span class="nn">time</span>
 
 <span class="kn">import</span> <span class="nn">redis</span>
 <span class="kn">from</span> <span class="nn">flask</span> <span class="kn">import</span> <span class="n">Flask</span>
@@ -56,10 +81,15 @@
 <span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
     <span class="n">count</span> <span class="o">=</span> <span class="n">get_hit_count</span><span class="p">()</span>
     <span class="k">return</span> <span class="s">'Hello World! I have been seen {} times.</span><span class="se">\n</span><span class="s">'</span><span class="p">.</span><span class="nb">format</span><span class="p">(</span><span class="n">count</span><span class="p">)</span>
-</code></pre>
+	    </code>
+	  </pre>
         </div>
       </div>
+    </li>
+  </ul>
 
+  <ul>
+    <li>
       <p>In this example, <code class="language-plaintext highlighter-rouge">redis</code> is the hostname of the redis container on the
         application’s network. We use the default port for Redis, <code class="language-plaintext highlighter-rouge">6379</code>.</p>
 
@@ -75,18 +105,24 @@
           nodes.</p>
       </blockquote>
     </li>
+  </ul>
+
+  <ul>
     <li>
       <p>Create another file called <code class="language-plaintext highlighter-rouge">requirements.txt</code> in your project directory and
         paste the following code in:</p>
-
       <div class="language-text highlighter-rouge">
-        <div class="highlight"><pre class="highlight"><code>flask
-redis
-</code></pre>
+        <div class="highlight">
+          <pre class="highlight">
+				<code>
+					flask
+					redis
+				</code>
+			</pre>
         </div>
       </div>
     </li>
-  </ol>
+  </ul>
 
   <h2 id="step-2-create-a-dockerfile">Step 2: Create a Dockerfile</h2>
 
@@ -108,7 +144,8 @@ redis
 <span class="k">EXPOSE</span><span class="s"> 5000</span>
 <span class="k">COPY</span><span class="s"> . .</span>
 <span class="k">CMD</span><span class="s"> ["flask", "run"]</span>
-</code></pre>
+</code>
+    </pre>
     </div>
   </div>
 
@@ -416,26 +453,6 @@ composetest_redis_1   docker-entrypoint.sh redis ...   Up      6379/tcp
     <li><a href="/compose/reference/">Explore the full list of Compose commands</a></li>
     <li><a href="/compose/compose-file/">Explore the Compose file reference</a></li>
     <li>To learn more about volumes and bind mounts, see <a href="/storage/">Manage data in Docker</a></li>
-  </ul>
-
-  <div id="side-toc-title">Contents:</div>
-  <div id="img-modal1" class="modal1">
-    <span class="close1" id="img-modal-close1">&times;</span>
-    <img src="/" alt="/" class="modal-content1" id="img-modal-img1">
-    <div id="img-modal-caption1"></div>
-  </div>
-
-  <ul id="my_toc" class="inline_toc">
-    <li><a href="#prerequisites" class="nomunge">Prerequisites</a></li>
-    <li><a href="#step-1-define-the-application-dependencies" class="nomunge">Step 1: Define the application dependencies</a></li>
-    <li><a href="#step-2-create-a-dockerfile" class="nomunge">Step 2: Create a Dockerfile</a></li>
-    <li><a href="#step-3-define-services-in-a-compose-file" class="nomunge">Step 3: Define services in a Compose file</a></li>
-    <li><a href="#step-4-build-and-run-your-app-with-compose" class="nomunge">Step 4: Build and run your app with Compose</a></li>
-    <li><a href="#step-5-edit-the-compose-file-to-add-a-bind-mount" class="nomunge">Step 5: Edit the Compose file to add a bind mount</a></li>
-    <li><a href="#step-6-re-build-and-run-the-app-with-compose" class="nomunge">Step 6: Re-build and run the app with Compose</a></li>
-    <li><a href="#step-7-update-the-application" class="nomunge">Step 7: Update the application</a></li>
-    <li><a href="#step-8-experiment-with-some-other-commands" class="nomunge">Step 8: Experiment with some other commands</a></li>
-    <li><a href="#where-to-go-next" class="nomunge">Where to go next</a></li>
   </ul>
 
 </body>
